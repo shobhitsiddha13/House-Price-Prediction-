@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #prediction-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="prediction-form">
+    <h2>House Price Prediction</h2>
+    <div class="form-group">
+        <label for="squareFeet">Square Feet:</label>
+        <input type="number" id="squareFeet" placeholder="Enter square feet" required>
+    </div>
+
+    <div class="form-group">
+        <label for="numBedrooms">Number of Bedrooms:</label>
+        <input type="number" id="numBedrooms" placeholder="Enter number of bedrooms" required>
+    </div>
+
+    <div class="form-group">
+        <label for="numBathrooms">Number of Bathrooms:</label>
+        <input type="number" id="numBathrooms" placeholder="Enter number of bathrooms" required>
+    </div>
+
+    <button onclick="predictPrice()">Predict Price</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    function predictPrice() {
+        var squareFeet = document.getElementById('squareFeet').value;
+        var numBedrooms = document.getElementById('numBedrooms').value;
+        var numBathrooms = document.getElementById('numBathrooms').value;
+
+        // Assuming you have a backend API endpoint for prediction
+        var apiUrl = 'YOUR_BACKEND_API_URL';
+
+        // Make an asynchronous request to the backend
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                squareFeet: squareFeet,
+                numBedrooms: numBedrooms,
+                numBathrooms: numBathrooms,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Display the predicted price in the result div
+            document.getElementById('result').innerHTML = 'Predicted Price: $' + data.predictedPrice;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
+</body>
+</html>
